@@ -20,6 +20,12 @@ ww = {
   subTitle = "yet another programmer",
   imageUrl = "ww.jpg"}
 
+ww1 : Elem
+ww1 = {
+  title = "Juck Norris",
+  subTitle = "looser",
+  imageUrl = "jn.jpg"}
+
 
 txt : String -> Int -> Element
 txt str h = str
@@ -54,4 +60,5 @@ elemForm elem x y = elemElem elem
 
 main : Element
 main = collage 700 700 [
+  elemForm ww1 200 200,
   elemForm ww 0 0]
