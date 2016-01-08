@@ -5,16 +5,16 @@ import Window exposing (..)
 
 
 txtHeight1 : number
-txtHeight1 = 35
+txtHeight1 = 25
 
 txtHeight2 : number
 txtHeight2 = 15
 
 contWidth : number
-contWidth = 350
+contWidth = 250
 
 contHeight : number
-contHeight = 350
+contHeight = 250
 
 typefaces : List String
 typefaces = ["Monospace"]
