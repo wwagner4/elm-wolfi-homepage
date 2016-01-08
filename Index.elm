@@ -10,12 +10,15 @@ txtCont str = container 300 (txtHeight + 5) middle (txtElem str)
 elemCont elem = container 300 (heightOf elem)  middle elem
 
 
-t : Element
-t = flow down [
+txtFlow = flow down [
   txtCont "Hallo",
-  txtCont "Wolfi",
-  elemCont (fittedImage 200 150 "ww.jpg")]
+  txtCont "Wolfi"]
+
+allFlow = flow inward [
+  txtFlow,
+  elemCont (opacity 0.5 (fittedImage 200 150 "ww.jpg"))]
+
 
 
 main : Element
-main = t
+main = allFlow
