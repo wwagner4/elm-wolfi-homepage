@@ -1,12 +1,23 @@
 import Graphics.Element exposing (..)
 import Graphics.Collage exposing (..)
 import Text exposing (..)
+import Window exposing (..)
 
+
+txtHeight1 : number
 txtHeight1 = 35
+
+txtHeight2 : number
 txtHeight2 = 15
+
+contWidth : number
 contWidth = 350
+
+contHeight : number
 contHeight = 350
-typefaces = ["sans-serif"]
+
+typefaces : List String
+typefaces = ["Monospace"]
 
 type alias Elem =
   { title : String,
@@ -20,11 +31,11 @@ ww = {
   subTitle = "yet another programmer",
   imageUrl = "ww.jpg"}
 
-ww1 : Elem
-ww1 = {
-  title = "Juck Norris",
+cn : Elem
+cn = {
+  title = "Chuck Norris",
   subTitle = "looser",
-  imageUrl = "jn.jpg"}
+  imageUrl = "cn.jpg"}
 
 
 txt : String -> Int -> Element
@@ -46,7 +57,8 @@ txtElem elem = flow down [
 txtElemCentered : Elem -> Element
 txtElemCentered elem = container contWidth contHeight middle (txtElem elem)
 
-elemCont elem = container contWidth (heightOf elem)  middle elem
+elemCont : Element -> Element
+elemCont el = container contWidth (heightOf el) middle el
 
 elemElem : Elem -> Element
 elemElem elem = flow inward [
@@ -58,7 +70,11 @@ elemForm elem x y = elemElem elem
   |> toForm
   |> move (x, y)
 
-main : Element
-main = collage 700 700 [
-  elemForm ww1 200 200,
+elemPlane : (Int, Int) -> Element
+elemPlane (x, y) = collage x y [
+  elemForm cn 200 -200,
   elemForm ww 0 0]
+
+main : Signal Element
+main = Signal.map elemPlane Window.dimensions
+
