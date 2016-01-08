@@ -1,11 +1,12 @@
 import Graphics.Element exposing (..)
+import Graphics.Collage exposing (..)
 import Text exposing (..)
 
-txtHeight1 = 70
-txtHeight2 = 30
-contWidth = 200
-contHeight = 150
-typefaces = ["trattatello","arial","sans-serif"]
+txtHeight1 = 35
+txtHeight2 = 15
+contWidth = 350
+contHeight = 300
+typefaces = ["sans-serif"]
 
 
 txtElem : String -> Int -> Element
@@ -16,13 +17,13 @@ txtElem str h = str
   |> centered
 
 txtCont : String -> Int -> Element
-txtCont str h = container contWidth (h + 5) middle (txtElem str h)
+txtCont str h = container contWidth (h + 10) middle (txtElem str h)
 elemCont elem = container contWidth (heightOf elem)  middle elem
 
 
 txtFlow = flow down [
-  txtCont "Hallo" txtHeight1,
-  txtCont "Wolfi" txtHeight2]
+  txtCont "Wolfgang Wagner" txtHeight1,
+  txtCont "font of programming" txtHeight2]
 
 
 txtCont1 = container contWidth contHeight middle txtFlow
@@ -32,6 +33,7 @@ allFlow = flow inward [
   elemCont (opacity 0.5 (fittedImage contWidth contHeight "ww.jpg"))]
 
 
+allForm = allFlow |> toForm |> move (0, 0)
 
 main : Element
-main = allFlow
+main = collage 700 700 [allForm]
