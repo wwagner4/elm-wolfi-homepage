@@ -13,13 +13,13 @@ txtHeight2 : number
 txtHeight2 = 20
 
 contWidth : number
-contWidth = 400
+contWidth = 300
 
 contHeight : number
-contHeight = 400
+contHeight = 250
 
 typefaces : List String
-typefaces = ["CFSpaceship-Regular", "Monospace"]
+typefaces = ["Chunkfive", "Monospace"]
 
 type alias Elem =
   { title : String,
