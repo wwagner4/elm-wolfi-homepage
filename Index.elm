@@ -2,6 +2,7 @@ import Elem exposing (Elem, elemForm)
 import Graphics.Collage exposing (..)
 import Graphics.Element exposing (..)
 import Window exposing (..)
+import Time exposing (..)
 
 
 ww : Elem
@@ -16,12 +17,15 @@ cn = {
   subTitle = "looser",
   imageUrl = "cn.jpg"}
 
+pos : Time -> Float
+pos t = -500.0 + toFloat(round(t) % 1000)
 
-elemPlane : (Int, Int) -> Element
-elemPlane (x, y) = collage x y [
-  elemForm cn 200 -200,
-  elemForm ww 0 0]
+
+elemPlane : (Int, Int) -> Time -> Element
+elemPlane (x, y) t = collage x y [
+  elemForm cn (pos t) 0,
+  elemForm ww 0 (pos t)]
 
 main : Signal Element
-main = Signal.map elemPlane Window.dimensions
+main = Signal.map2 elemPlane Window.dimensions (Time.every (Time.second * 0.0001))
 
