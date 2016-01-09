@@ -18,7 +18,7 @@ cn = {
   imageUrl = "cn.jpg"}
 
 pos : Time -> Float
-pos t = -500.0 + toFloat(round(t) % 1000)
+pos t = 500 * (sin (t * 0.001))
 
 
 elemPlane : (Int, Int) -> Time -> Element
@@ -27,5 +27,5 @@ elemPlane (x, y) t = collage x y [
   elemForm ww 0 (pos t)]
 
 main : Signal Element
-main = Signal.map2 elemPlane Window.dimensions (Time.every (Time.second * 0.0001))
+main = Signal.map2 elemPlane Window.dimensions (Time.every (Time.second * 0.01))
 
