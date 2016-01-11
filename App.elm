@@ -38,11 +38,9 @@ update action model =
 top: Model -> String
 top model = (toString model.y) ++ "px"
 
-view : Signal.Address Action -> Model -> Html
-view address model =
-  div []
-    [ button [ onClick address Up ] [ text "UP" ]
-    , div [style [
+movingDiv : Model -> Html
+movingDiv model =
+    div [style [
       ("position", "absolute")
       , ("width", "200px")
       , ("height", "100px")
@@ -50,5 +48,13 @@ view address model =
       , ("left", "10px")
       , ("top", top model)
     ]] []
+
+
+view : Signal.Address Action -> Model -> Html
+view address model =
+  div []
+    [ button [ onClick address Up ] [ text "UP" ]
+    , movingDiv model
     , button [ onClick address Down ] [ text "DOWN" ]
+    , button [ onClick address Reset ] [ text "RESET" ]
     ]
