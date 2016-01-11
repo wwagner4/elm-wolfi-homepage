@@ -1,5 +1,9 @@
 import StartApp.Simple exposing (start)
 import Html exposing (div, button, text, Html)
+
+import Html.Events exposing (onClick)
+import Html.Attributes exposing (style)
+
 import Html.Events exposing (onClick)
 import Signal exposing (Address)
 
@@ -15,7 +19,7 @@ type alias Model =
   }
 
 initial : Model
-initial = {x = 0, y = 0}
+initial = {x = 100, y = 400}
 
 -- UPDATE
 
@@ -24,16 +28,27 @@ type Action = Reset | Up | Down
 update : Action -> Model -> Model
 update action model =
   case action of
-    Up -> model
-    Down -> { model |y = model.y - 10}
+    Up -> { model |y = model.y - 10}
+    Down -> { model |y = model.y + 10}
     Reset -> initial
 
 
 -- VIEW
 
+top: Model -> String
+top model = (toString model.y) ++ "px"
+
 view : Signal.Address Action -> Model -> Html
 view address model =
   div []
     [ button [ onClick address Up ] [ text "UP" ]
+    , div [style [
+      ("position", "absolute")
+      , ("width", "200px")
+      , ("height", "100px")
+      , ("background-color", "blue")
+      , ("left", "10px")
+      , ("top", top model)
+    ]] []
     , button [ onClick address Down ] [ text "DOWN" ]
     ]
