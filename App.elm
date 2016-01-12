@@ -1,10 +1,7 @@
 import StartApp.Simple exposing (start)
 import Html exposing (div, button, text, Html)
-
 import Html.Events exposing (onClick)
 import Html.Attributes exposing (style)
-
-import Html.Events exposing (onClick)
 import Signal exposing (Address)
 
 
@@ -19,7 +16,7 @@ type alias Model =
   }
 
 initial : Model
-initial = {x = 100, y = 400}
+initial = {x = 200, y = 400}
 
 -- UPDATE
 
@@ -38,6 +35,9 @@ update action model =
 top: Model -> String
 top model = (toString model.y) ++ "px"
 
+left: Model -> String
+left model = (toString model.x) ++ "px"
+
 movingDiv : Model -> Html
 movingDiv model =
     div [style [
@@ -45,7 +45,7 @@ movingDiv model =
       , ("width", "200px")
       , ("height", "100px")
       , ("background-color", "blue")
-      , ("left", "10px")
+      , ("left", left model)
       , ("top", top model)
     ]] []
 
