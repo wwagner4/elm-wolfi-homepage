@@ -33,13 +33,23 @@ cn = {
 pos : Time -> Float
 pos t = 500 * (sin (t * 0.001))
 
-
 view : (Int, Int) -> Time -> (Int, Int) -> Element
 view (w, h) t (x, y) = collage w h [
   elemForm cn (pos t) (toFloat x),
   elemForm ww 0 (pos t)]
 
+time : Signal Time
+time = Time.every (Time.second * 0.01)
+
+
+mousePos : Signal (Int, Int)
+mousePos =
+  Signal.sampleOn Mouse.clicks Mouse.position
+
 
 main : Signal Element
-main = Signal.map3 view Window.dimensions (Time.every (Time.second * 0.01)) countClick
+main = Signal.map3
+  view Window.dimensions
+  time
+  mousePos
 
