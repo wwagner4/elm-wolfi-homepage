@@ -6,6 +6,8 @@ import Time exposing (..)
 import Mouse exposing (..)
 
 
+type alias MousePos = (Int, Int)
+
 type alias PosElem = {
   pos : (Float, Float)
   , elem : Elem
@@ -31,25 +33,26 @@ cn = {
   imageUrl = "cn.jpg"}
 
 pos : Time -> Float
-pos t = 500 * (sin (t * 0.001))
+pos t = 400 * (sin (t * 0.002))
 
-view : (Int, Int) -> Time -> (Int, Int) -> Element
+view : (Int, Int) -> Time -> MousePos -> Element
 view (w, h) t (x, y) = collage w h [
   elemForm cn (pos t) (toFloat x),
   elemForm ww 0 (pos t)]
 
 time : Signal Time
-time = Time.every (Time.second * 0.01)
+time = Time.every (Time.second * 0.001)
 
 
-mousePos : Signal (Int, Int)
+mousePos : Signal MousePos
 mousePos =
   Signal.sampleOn Mouse.clicks Mouse.position
 
 
 main : Signal Element
 main = Signal.map3
-  view Window.dimensions
+  view
+  Window.dimensions
   time
   mousePos
 
