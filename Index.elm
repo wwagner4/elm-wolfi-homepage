@@ -23,6 +23,7 @@ ww = {
   subTitle = "yet another programmer",
   imageUrl = "ww.jpg"}
 
+
 cn : Elem
 cn = {
   title = "Chuck Norris",
@@ -33,15 +34,12 @@ pos : Time -> Float
 pos t = 500 * (sin (t * 0.001))
 
 
-elemPlane : (Int, Int) -> Time -> (Int, Int) -> Element
-elemPlane (w, h) t (x, y) = collage w h [
+view : (Int, Int) -> Time -> (Int, Int) -> Element
+view (w, h) t (x, y) = collage w h [
   elemForm cn (pos t) (toFloat x),
   elemForm ww 0 (pos t)]
 
-countClick : Signal (Int, Int)
-countClick =
-  Signal.sampleOn Mouse.clicks Mouse.position
 
 main : Signal Element
-main = Signal.map3 elemPlane Window.dimensions (Time.every (Time.second * 0.01)) countClick
+main = Signal.map3 view Window.dimensions (Time.every (Time.second * 0.01)) countClick
 
