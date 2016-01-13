@@ -6,6 +6,17 @@ import Time exposing (..)
 import Mouse exposing (..)
 
 
+type alias PosElem = {
+  pos : (Float, Float)
+  , elem : Elem
+}
+
+
+type alias Model = {
+  elems : List PosElem
+}
+
+
 ww : Elem
 ww = {
   title = "Wolfgang Wagner",
