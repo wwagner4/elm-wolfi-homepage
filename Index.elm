@@ -22,14 +22,14 @@ pos : Time -> Float
 pos t = 500 * (sin (t * 0.001))
 
 
-elemPlane : (Int, Int) -> Time -> Int -> Element
-elemPlane (x, y) t c = collage x y [
-  elemForm cn (pos t) ((toFloat c) * 100),
+elemPlane : (Int, Int) -> Time -> (Int, Int) -> Element
+elemPlane (w, h) t (x, y) = collage w h [
+  elemForm cn (pos t) (toFloat x),
   elemForm ww 0 (pos t)]
 
-countClick : Signal Int
+countClick : Signal (Int, Int)
 countClick =
-  Signal.foldp (\clk count -> count + 1) 0 Mouse.clicks
+  Signal.sampleOn Mouse.clicks Mouse.position
 
 main : Signal Element
 main = Signal.map3 elemPlane Window.dimensions (Time.every (Time.second * 0.01)) countClick
