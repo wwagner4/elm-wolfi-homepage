@@ -46,8 +46,10 @@ txtElem elem = flow down [
 txtElemCentered : Elem -> Element
 txtElemCentered elem = container contWidth contHeight middle (txtElem elem)
 
+
 elemCont : Element -> Element
 elemCont el = container contWidth (heightOf el) middle el
+
 
 elemElem : Elem -> Element
 elemElem elem = flow inward [
