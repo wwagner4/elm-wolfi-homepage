@@ -52,28 +52,24 @@ pos off t = 400 * (sin ((t * 0.002) + off))
 
 
 posFromTime : Time -> (Float, Float)
-posFromTime t = (pos -20 t, pos 20 t)
+posFromTime t = (pos -120 t, pos 20 t)
 
 
-toForm1 : Elem -> (Float, Float) -> Form
-toForm1 elem (x, y) = elemForm elem x y
-
-
-toForm : PosElem -> Form
-toForm pe = toForm1 pe.elem pe.pos
+toForm : Elem -> (Float, Float) -> Form
+toForm elem (x, y) = elemForm elem x y
 
 
 view : ScreenSize -> Model -> Element
-view (w, h) model = collage w h (List.map toForm model.elems)
+view (w, h) model = collage w h (List.map (\pe -> toForm pe.elem pe.pos) model.elems)
 
 
 updateElem : Time -> MousePos -> PosElem -> PosElem
-updateElem time mousePos posElem = { posElem |pos = posFromTime time }
+updateElem time mousePos posElem = { posElem | pos = posFromTime time }
 
 
 update : Input -> Model -> Model
 update input model =
-  { model |elems = List.map
+  { model | elems = List.map
     (updateElem input.time input.mousePos)
     model.elems
   }
