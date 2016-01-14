@@ -47,16 +47,28 @@ initial = { elems = [
   }
 
 
-pos : Time -> Float
-pos t = 400 * (sin (t * 0.002))
+pos : Float -> Time -> Float
+pos off t = 400 * (sin ((t * 0.002) + off))
+
+
+posFromTime : Time -> (Float, Float)
+posFromTime t = (pos -20 t, pos 20 t)
+
+
+toForm1 : Elem -> (Float, Float) -> Form
+toForm1 elem (x, y) = elemForm elem x y
+
+
+toForm : PosElem -> Form
+toForm pe = toForm1 pe.elem pe.pos
+
 
 view : ScreenSize -> Model -> Element
-view (w, h) model = collage w h [
-  elemForm cn 10 10,
-  elemForm ww -10 -10]
+view (w, h) model = collage w h (List.map toForm model.elems)
+
 
 updateElem : Time -> MousePos -> PosElem -> PosElem
-updateElem time mousePos posElem = posElem
+updateElem time mousePos posElem = { posElem |pos = posFromTime time }
 
 
 update : Input -> Model -> Model
@@ -68,7 +80,7 @@ update input model =
 
 
 time : Signal Time
-time = Time.every (Time.second * 0.001)
+time = Time.every (Time.millisecond * 1)
 
 
 mousePos : Signal MousePos
