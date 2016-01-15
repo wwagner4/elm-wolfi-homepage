@@ -11,13 +11,15 @@ type alias MousePos = (Int, Int)
 type alias ScreenSize = (Int, Int)
 
 type alias PosElem = {
-  pos : (Float, Float)
+  offset : Float
+  , pos : (Float, Float)
   , elem : Elem
 }
 
 
 type alias Model = {
-  elems : List PosElem
+  latestMousePos: MousePos
+  , elems : List PosElem
 }
 
 type alias Input = {
@@ -41,9 +43,11 @@ cn = {
 
 
 initial : Model
-initial = { elems = [
-  { pos = (0, 0), elem = ww }
-  , { pos = (0, 0), elem = cn }]
+initial = {
+  latestMousePos = (0, 0)
+  , elems = [
+  { offset = 20, pos = (0, 0), elem = ww }
+  , { offset = 40, pos = (0, 0), elem = cn }]
   }
 
 
@@ -51,8 +55,8 @@ pos : Float -> Time -> Float
 pos off t = 400 * (sin ((t * 0.002) + off))
 
 
-posFromTime : Time -> (Float, Float)
-posFromTime t = (pos -120 t, pos 20 t)
+posFromTime : Float -> Time -> (Float, Float)
+posFromTime off t = (pos off t, pos -off t)
 
 
 toForm : Elem -> (Float, Float) -> Form
@@ -64,7 +68,7 @@ view (w, h) model = collage w h (List.map (\pe -> toForm pe.elem pe.pos) model.e
 
 
 updateElem : Time -> MousePos -> PosElem -> PosElem
-updateElem time mousePos posElem = { posElem | pos = posFromTime time }
+updateElem time mousePos posElem = { posElem | pos = posFromTime posElem.offset time }
 
 
 update : Input -> Model -> Model
