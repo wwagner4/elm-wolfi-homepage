@@ -18,7 +18,8 @@ type alias PosElem = {
 
 
 type alias Model = {
-  latestMousePos: MousePos
+  mouseClicked: Bool
+  , latestMousePos: MousePos
   , elems : List PosElem
 }
 
@@ -44,7 +45,8 @@ cn = {
 
 initial : Model
 initial = {
-  latestMousePos = (0, 0)
+  mouseClicked = False
+  , latestMousePos = (0, 0)
   , elems = [
   { offset = 20, pos = (0, 0), elem = ww }
   , { offset = 40, pos = (0, 0), elem = cn }]
@@ -67,15 +69,28 @@ view : ScreenSize -> Model -> Element
 view (w, h) model = collage w h (List.map (\pe -> toForm pe.elem pe.pos) model.elems)
 
 
-updateElem : Time -> MousePos -> PosElem -> PosElem
-updateElem time mousePos posElem = { posElem | pos = posFromTime posElem.offset time }
+updateElem : Model -> Input -> PosElem -> PosElem
+updateElem model input posElem =
+  let
+    off = if model.mouseClicked then posElem.offset + 10 else posElem.offset
+  in
+    { posElem |
+      pos = posFromTime off input.time
+      , offset = off
+    }
 
+
+updateMouseClicked : Model -> MousePos -> Bool
+updateMouseClicked model mousePos = model.latestMousePos /= mousePos
 
 update : Input -> Model -> Model
 update input model =
-  { model | elems = List.map
-    (updateElem input.time input.mousePos)
-    model.elems
+  { model |
+    mouseClicked = updateMouseClicked model input.mousePos
+    , latestMousePos = input.mousePos
+    , elems = List.map
+      (updateElem model input)
+      model.elems
   }
 
 
