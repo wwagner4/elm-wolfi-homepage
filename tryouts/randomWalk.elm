@@ -31,11 +31,15 @@ initial = { elem = initialElem }
 
 
 updatePos : PanelDim -> Pos -> Pos
-updatePos panel pos = { pos | x = 0.0 , y = 0.0 }
+updatePos panel pos = { pos |
+  x = 0.0 ,
+  y = 0.0 }
 
 updateElem : PanelDim -> Elem -> Elem
-updateElem panel elem = { elem | pos = updatePos panel elem.pos }
+updateElem panel elem = { elem |
+  pos = updatePos panel elem.pos }
 
 
 update : PanelDim -> Model -> Model
-update panel model = { model | elem = updateElem panel model.elem }
+update panel model = { model |
+  elem = updateElem panel model.elem }
