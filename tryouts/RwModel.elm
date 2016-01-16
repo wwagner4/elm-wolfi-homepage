@@ -32,12 +32,12 @@ initialElem = { pos = initialPos }
 
 initial : Model
 initial = {
-  seed = initialSeed 0
+  seed = initialSeed 821736182376
   , elem = initialElem }
 
 
 diffGen : Generator Float
-diffGen = Random.float -2.0 2.0
+diffGen = Random.float -20.0 20.0
 
 
 ranDiff : Seed -> (Float, Seed)
