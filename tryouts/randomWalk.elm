@@ -51,8 +51,8 @@ updateY panel pos = pos.y + ranDiff
 
 updatePos : PanelDim -> Pos -> Pos
 updatePos panel pos = { pos |
-  x = updateX panel pos  ,
-  y = updateY panel pos }
+  x = updateX panel pos
+  , y = updateY panel pos }
 
 updateElem : PanelDim -> Elem -> Elem
 updateElem panel elem = { elem |
