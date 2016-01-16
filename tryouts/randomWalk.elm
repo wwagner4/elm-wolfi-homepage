@@ -20,10 +20,6 @@ type alias Model = {
   , elem : Elem
 }
 
-diffGen : Generator Float
-diffGen = Random.float -2.0 2.0
-
-
 initialPos : Pos
 initialPos = { x = 0.0, y = 0.0 }
 
@@ -38,27 +34,52 @@ initial = {
   , elem = initialElem }
 
 
-ranDiff : Float
-ranDiff = 0.1
-
-updateX : PanelDim -> Pos -> Float
-updateX panel pos = pos.x + ranDiff
+diffGen : Generator Float
+diffGen = Random.float -2.0 2.0
 
 
-updateY : PanelDim -> Pos -> Float
-updateY panel pos = pos.y + ranDiff
+ranDiff : Seed -> (Float, Seed)
+ranDiff seed = generate diffGen seed
+
+updateX : PanelDim -> Seed -> Pos -> (Float, Seed)
+updateX panel seed pos =
+  let
+    (diff, seed) = ranDiff seed
+  in
+    (pos.x + diff, seed)
 
 
-updatePos : PanelDim -> Pos -> Pos
-updatePos panel pos = { pos |
-  x = updateX panel pos
-  , y = updateY panel pos }
+updateY : PanelDim -> Seed -> Pos -> (Float, Seed)
+updateY panel seed pos =
+  let
+    (diff, seed) = ranDiff seed
+  in
+    (pos.y + diff, seed)
 
-updateElem : PanelDim -> Elem -> Elem
-updateElem panel elem = { elem |
-  pos = updatePos panel elem.pos }
+
+updatePos : PanelDim -> Seed -> Pos -> (Pos, Seed)
+updatePos panel seed pos =
+  let
+    (x, s1) = updateX panel seed pos
+    (y, s2) = updateY panel s1 pos
+    pos = { pos | x = x , y = x }
+  in
+    (pos, s2)
+
+updateElem : PanelDim -> Seed -> Elem -> (Elem, Seed)
+updateElem panel seed elem =
+  let
+    (pos, seed) = updatePos panel seed elem.pos
+    elem = { elem | pos = pos }
+  in
+    (elem, seed)
 
 
 update : PanelDim -> Model -> Model
-update panel model = { model |
-  elem = updateElem panel model.elem }
+update panel model =
+  let
+    (elem, seed) = updateElem panel model.seed model.elem
+  in
+    { model |
+      elem = elem
+      , seed = seed}
