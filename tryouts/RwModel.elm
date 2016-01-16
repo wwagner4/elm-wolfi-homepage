@@ -1,8 +1,6 @@
 module RwModel where
 
-
 import Random exposing (..)
-
 
 
 type alias PanelDim = {

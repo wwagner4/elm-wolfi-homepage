@@ -1,3 +1,5 @@
+module RwView where
+
 import RwModel exposing (..)
 import Graphics.Element exposing (..)
 import Graphics.Collage exposing (..)
@@ -5,7 +7,8 @@ import Color exposing (..)
 
 
 shape : Shape
-shape = square 10.0
+shape = circle 50.0
+
 
 form : Shape -> Form
 form shape = filled Color.red shape
@@ -22,11 +25,3 @@ view panel model =
     h = round panel.h
   in
     collage w h [toForm model.elem]
-
-
-dim : PanelDim
-dim = {w = 400.0, h = 400.0}
-
-
-main : Element
-main = view dim RwModel.initial
