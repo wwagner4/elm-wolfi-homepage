@@ -45,16 +45,18 @@ updateX : PanelDim -> Seed -> Pos -> (Float, Seed)
 updateX panel seed pos =
   let
     (diff, seed) = ranDiff seed
+    x = pos.x + diff
   in
-    (pos.x + diff, seed)
+    (x, seed)
 
 
 updateY : PanelDim -> Seed -> Pos -> (Float, Seed)
 updateY panel seed pos =
   let
     (diff, seed) = ranDiff seed
+    y = pos.y + diff
   in
-    (pos.y + diff, seed)
+    (y, seed)
 
 
 updatePos : PanelDim -> Seed -> Pos -> (Pos, Seed)
