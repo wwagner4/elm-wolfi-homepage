@@ -83,14 +83,15 @@ updateElem model input posElem =
     }
 
 
-updateMouseClicked : Model -> MousePos -> Bool
-updateMouseClicked model mousePos = model.latestMousePos /= mousePos
+updateMouseClicked : Model -> Int -> Bool
+updateMouseClicked model mouseClicks = model.latestMouseClicks /= mouseClicks
 
 update : Input -> Model -> Model
 update input model =
   { model |
-    mouseClicked = updateMouseClicked model input.mousePos
+    mouseClicked = updateMouseClicked model input.mouseClicks
     , latestMousePos = input.mousePos
+    , latestMouseClicks = input.mouseClicks
     , elems = List.map
       (updateElem model input)
       model.elems
