@@ -56,6 +56,7 @@ elemElem elem = flow inward [
   txtElemCentered elem,
   elemCont (opacity 0.5 (fittedImage contWidth contHeight elem.imageUrl))]
 
+
 elemForm : Elem -> Float -> Float -> Form
 elemForm elem x y = elemElem elem
   |> toForm
