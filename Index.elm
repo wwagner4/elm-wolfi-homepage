@@ -50,8 +50,8 @@ initial = {
   , latestMousePos = (0, 0)
   , latestMouseClicks = 0
   , elems = [
-  { offset = 20, pos = (0, 0), elem = ww }
-  , { offset = 40, pos = (0, 0), elem = cn }]
+    { offset = 20, pos = (0, 0), elem = ww }
+    , { offset = 40, pos = (0, 0), elem = cn }]
   }
 
 
