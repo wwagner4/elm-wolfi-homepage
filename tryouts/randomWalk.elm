@@ -1,13 +1,15 @@
 
-type alias Posi = {
+type alias Pos = {
   x: Float
   , y : Float
 }
 
 type alias Elem = {
-  pos : Posi
+  pos : Pos
 }
 
 type alias Model = {
-  elems : List Elem
+  elem : Elem
 }
+
+
