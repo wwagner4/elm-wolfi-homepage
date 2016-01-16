@@ -20,6 +20,7 @@ type alias PosElem = {
 type alias Model = {
   mouseClicked: Bool
   , latestMousePos: MousePos
+  , latestMouseClicks : Int
   , elems : List PosElem
 }
 
@@ -47,6 +48,7 @@ initial : Model
 initial = {
   mouseClicked = False
   , latestMousePos = (0, 0)
+  , latestMouseClicks = 0
   , elems = [
   { offset = 20, pos = (0, 0), elem = ww }
   , { offset = 40, pos = (0, 0), elem = cn }]
