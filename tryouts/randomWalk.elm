@@ -16,10 +16,12 @@ type alias Elem = {
 }
 
 type alias Model = {
-  elem : Elem
+  seed : Seed
+  , elem : Elem
 }
 
-seed = initialSeed 0
+diffGen : Generator Float
+diffGen = Random.float -2.0 2.0
 
 
 initialPos : Pos
@@ -31,12 +33,13 @@ initialElem = { pos = initialPos }
 
 
 initial : Model
-initial = { elem = initialElem }
+initial = {
+  seed = initialSeed 0
+  , elem = initialElem }
 
 
 ranDiff : Float
 ranDiff = 0.1
-
 
 updateX : PanelDim -> Pos -> Float
 updateX panel pos = pos.x + ranDiff
