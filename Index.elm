@@ -27,6 +27,7 @@ type alias Model = {
 type alias Input = {
   time: Time
   , mousePos: MousePos
+  , mouseClicks: Int
 }
 
 
@@ -115,10 +116,12 @@ clicksCount = (Signal.foldp eventCount 1 Mouse.clicks)
 
 input : Time
   -> MousePos
+  -> Int
   -> Input
-input time mousePos = {
+input time mousePos mouseClicks = {
   time = time
-  , mousePos = mousePos}
+  , mousePos = mousePos
+  , mouseClicks = mouseClicks}
 
 
 main : Signal Element
@@ -128,4 +131,4 @@ main = Signal.map2
   (Signal.foldp
     update
     initial
-    (Signal.map2 input time mousePos))
+    (Signal.map3 input time mousePos clicksCount))
