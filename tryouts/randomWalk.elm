@@ -1,5 +1,5 @@
 
-type alias ScreenDim = {
+type alias PanelDim = {
   w : Float
   , h : Float
 }
