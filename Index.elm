@@ -103,6 +103,14 @@ mousePos =
   Signal.sampleOn Mouse.clicks Mouse.position
 
 
+eventCount : () -> Int -> Int
+eventCount unit cnt = cnt + 1
+
+
+clicksCount : Signal Int
+clicksCount = (Signal.foldp eventCount 1 Mouse.clicks)
+
+
 input : Time
   -> MousePos
   -> Input
