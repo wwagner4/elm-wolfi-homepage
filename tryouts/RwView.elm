@@ -30,4 +30,4 @@ view panel model =
     w = round panel.w
     h = round panel.h
   in
-    collage w h [toForm model.elem]
+    collage w h (List.map toForm model.elems)
