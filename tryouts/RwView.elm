@@ -15,7 +15,13 @@ form shape = filled Color.red shape
 
 
 toForm : Elem -> Form
-toForm elem = form shape
+toForm elem =
+  let
+    x = elem.pos.x
+    y = elem.pos.y
+  in
+    form shape
+      |> move (x, y)
 
 
 view : PanelDim -> Model -> Element

@@ -46,19 +46,19 @@ ranDiff seed = generate diffGen seed
 updateX : PanelDim -> Seed -> Pos -> (Float, Seed)
 updateX panel seed pos =
   let
-    (diff, seed) = ranDiff seed
+    (diff, nextSeed) = ranDiff seed
     x = pos.x + diff
   in
-    (x, seed)
+    (x, nextSeed)
 
 
 updateY : PanelDim -> Seed -> Pos -> (Float, Seed)
 updateY panel seed pos =
   let
-    (diff, seed) = ranDiff seed
+    (diff, nextSeed) = ranDiff seed
     y = pos.y + diff
   in
-    (y, seed)
+    (y, nextSeed)
 
 
 updatePos : PanelDim -> Seed -> Pos -> (Pos, Seed)
@@ -66,18 +66,18 @@ updatePos panel seed pos =
   let
     (x, s1) = updateX panel seed pos
     (y, s2) = updateY panel s1 pos
-    pos = { pos | x = x , y = x }
+    nextPos = { pos | x = x , y = y }
   in
-    (pos, s2)
+    (nextPos, s2)
 
 
 updateElem : PanelDim -> Seed -> Elem -> (Elem, Seed)
 updateElem panel seed elem =
   let
-    (pos, seed) = updatePos panel seed elem.pos
-    elem = { elem | pos = pos }
+    (pos, nextSeed) = updatePos panel seed elem.pos
+    nextElem = { elem | pos = pos }
   in
-    (elem, seed)
+    (nextElem, nextSeed)
 
 
 update : PanelDim -> Model -> Model
