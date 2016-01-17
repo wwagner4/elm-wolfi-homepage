@@ -33,7 +33,7 @@ initialElem = { pos = initialPos }
 initial : Model
 initial = {
   seed = initialSeed 821736182376
-  , elems = List.repeat 500 initialElem }
+  , elems = List.repeat 100 initialElem }
 
 
 diffGen : Generator Float
