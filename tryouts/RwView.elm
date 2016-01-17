@@ -12,8 +12,8 @@ shape = circle 70.0
 
 form : Shape -> Form
 form shape = shape
-  |> filled Color.red
-  |> alpha 0.05
+  |> filled Color.green
+  |> alpha 0.5
 
 
 toForm : Elem -> Form

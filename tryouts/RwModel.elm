@@ -37,7 +37,7 @@ initial = {
 
 
 diffVal : Float
-diffVal = 1.0
+diffVal = 5.0
 
 
 diffGen : Generator Float
@@ -54,9 +54,9 @@ updateX panel seed pos =
     max = panel.w / 2.0
     corr1 = if (pos.x > max * 0.9) then -diffVal else 0
     corr2 = if (pos.x < -max * 0.9) then diffVal else 0
-    x = pos.x + diff + corr1 + corr2
+    nextX = pos.x + diff + corr1 + corr2
   in
-    (x, nextSeed)
+    (nextX, nextSeed)
 
 
 updateY : PanelDim -> Seed -> Pos -> (Float, Seed)
@@ -66,17 +66,17 @@ updateY panel seed pos =
     max = panel.h / 2.0
     corr1 = if (pos.y > max * 0.9) then -diffVal else 0
     corr2 = if (pos.y < -max * 0.9) then diffVal else 0
-    y = pos.y + diff + corr1 + corr2
+    nextY = pos.y + diff + corr1 + corr2
   in
-    (y, nextSeed)
+    (nextY, nextSeed)
 
 
 updatePos : PanelDim -> Seed -> Pos -> (Pos, Seed)
 updatePos panel seed pos =
   let
-    (x, s1) = updateX panel seed pos
-    (y, s2) = updateY panel s1 pos
-    nextPos = { pos | x = x , y = y }
+    (nextX, s1) = updateX panel seed pos
+    (nextY, s2) = updateY panel s1 pos
+    nextPos = { pos | x = nextX , y = nextY }
   in
     (nextPos, s2)
 
@@ -84,14 +84,14 @@ updatePos panel seed pos =
 updateElem : PanelDim -> Seed -> Elem -> (Elem, Seed)
 updateElem panel seed elem =
   let
-    (pos, nextSeed) = updatePos panel seed elem.pos
-    nextElem = { elem | pos = pos }
+    (nextPos, nextSeed) = updatePos panel seed elem.pos
+    nextElem = { elem | pos = nextPos }
   in
     (nextElem, nextSeed)
 
 
-updateElem1 : Elem -> (List Elem, Seed, PanelDim) -> (List Elem, Seed, PanelDim)
-updateElem1 elem (elems, seed, panelDim) =
+updateFoldElem : Elem -> (List Elem, Seed, PanelDim) -> (List Elem, Seed, PanelDim)
+updateFoldElem elem (elems, seed, panelDim) =
   let
     (nextElem, nextSeed) = updateElem panelDim seed elem
     nextElems = nextElem :: elems
@@ -104,7 +104,7 @@ update panelDim model =
   let
     (nextElems, nextSeed, panelDim) =
       List.foldl
-        updateElem1
+        updateFoldElem
         ([], model.seed, panelDim)
         model.elems
   in
