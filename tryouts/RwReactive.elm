@@ -8,7 +8,7 @@ import Graphics.Element exposing (..)
 
 
 time : Signal Time
-time = Time.every (Time.millisecond * 100)
+time = Time.every (Time.millisecond * 10)
 
 
 toPanelDim : (Int, Int) -> PanelDim

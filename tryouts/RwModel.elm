@@ -19,7 +19,7 @@ type alias Elem = {
 
 type alias Model = {
   seed : Seed
-  , elem : Elem
+  , elems : List Elem
 }
 
 initialPos : Pos
@@ -33,11 +33,11 @@ initialElem = { pos = initialPos }
 initial : Model
 initial = {
   seed = initialSeed 821736182376
-  , elem = initialElem }
+  , elems = List.repeat 500 initialElem }
 
 
 diffGen : Generator Float
-diffGen = Random.float -20.0 20.0
+diffGen = Random.float -5.0 5.0
 
 
 ranDiff : Seed -> (Float, Seed)
@@ -80,11 +80,24 @@ updateElem panel seed elem =
     (nextElem, nextSeed)
 
 
+updateElem1 : Elem -> (List Elem, Seed, PanelDim) -> (List Elem, Seed, PanelDim)
+updateElem1 elem (elems, seed, panelDim) =
+  let
+    (nextElem, nextSeed) = updateElem panelDim seed elem
+    nextElems = nextElem :: elems
+  in
+    (nextElems, nextSeed, panelDim)
+
+
 update : PanelDim -> Model -> Model
 update panelDim model =
   let
-    (elem, seed) = updateElem panelDim model.seed model.elem
+    (nextElems, nextSeed, panelDim) =
+      List.foldl
+        updateElem1
+        ([], model.seed, panelDim)
+        model.elems
   in
     { model |
-      elem = elem
-      , seed = seed}
+      elems = nextElems
+      , seed = nextSeed }
