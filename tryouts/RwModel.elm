@@ -1,19 +1,12 @@
 module RwModel where
 
 import Random exposing (..)
-import Time exposing (..)
 
 
 type alias PanelDim = {
   w : Float
   , h : Float
 }
-
-type alias Inp = {
-  time : Time
-  , panelDim : PanelDim
-}
-
 
 type alias Pos = {
   x: Float
@@ -87,10 +80,10 @@ updateElem panel seed elem =
     (elem, seed)
 
 
-update : Inp -> Model -> Model
-update inp model =
+update : PanelDim -> Model -> Model
+update panelDim model =
   let
-    (elem, seed) = updateElem inp.panelDim model.seed model.elem
+    (elem, seed) = updateElem panelDim model.seed model.elem
   in
     { model |
       elem = elem
