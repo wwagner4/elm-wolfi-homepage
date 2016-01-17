@@ -36,8 +36,12 @@ initial = {
   , elems = List.repeat 100 initialElem }
 
 
+diffVal : Float
+diffVal = 1.0
+
+
 diffGen : Generator Float
-diffGen = Random.float -5.0 5.0
+diffGen = Random.float -diffVal diffVal
 
 
 ranDiff : Seed -> (Float, Seed)
@@ -47,7 +51,10 @@ updateX : PanelDim -> Seed -> Pos -> (Float, Seed)
 updateX panel seed pos =
   let
     (diff, nextSeed) = ranDiff seed
-    x = pos.x + diff
+    max = panel.w / 2.0
+    corr1 = if (pos.x > max * 0.9) then -diffVal else 0
+    corr2 = if (pos.x < -max * 0.9) then diffVal else 0
+    x = pos.x + diff + corr1 + corr2
   in
     (x, nextSeed)
 
@@ -56,7 +63,10 @@ updateY : PanelDim -> Seed -> Pos -> (Float, Seed)
 updateY panel seed pos =
   let
     (diff, nextSeed) = ranDiff seed
-    y = pos.y + diff
+    max = panel.h / 2.0
+    corr1 = if (pos.y > max * 0.9) then -diffVal else 0
+    corr2 = if (pos.y < -max * 0.9) then diffVal else 0
+    y = pos.y + diff + corr1 + corr2
   in
     (y, nextSeed)
 
